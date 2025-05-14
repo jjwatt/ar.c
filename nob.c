@@ -41,7 +41,7 @@ bool build_and_run_test(Nob_Cmd *cmd, const char *test_name) {
     if (getenv("BUILD_ASAN")) {
 	nob_cmd_append(cmd, "cc", "-Wall", "-Wextra", "-fsanitize=address", "-g", src_path, "-o", bin_path, "-L"BUILD_FOLDER, "-lar");
     } else {
-	nob_cmd_append(cmd, "cc", "-Wall", "-Wextra", "-g", src_path, "-o", bin_path, "-L"BUILD_FOLDER, "-lwdc");
+	nob_cmd_append(cmd, "cc", "-Wall", "-Wextra", "-g", src_path, "-o", bin_path, "-L"BUILD_FOLDER, "-lar");
     }
     if (!nob_cmd_run_sync_and_reset(cmd)) return false;
     nob_cmd_append(cmd, bin_path);
@@ -68,7 +68,7 @@ int main(int argc, char **argv) {
     if (!build_ar_lib(&cmd)) return 1;
 
     if (strcmp(command_name, "test") == 0) {
-	/* if (!build_and_run_test(&cmd, "test_get_bookmark_path")) return 1; */
+	if (!build_and_run_test(&cmd, "test_arrays")) return 1;
 	/* if (!build_and_run_test(&cmd, "test_add_and_get_bookmarks")) return 1; */
     }
    return 0;
